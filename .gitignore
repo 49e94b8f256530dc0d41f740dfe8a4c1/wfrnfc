@@ -1,0 +1,14 @@
+# Python
+*__pycache__*
+# IDE files
+.vscode/
+# Environment Variables
+.env
+# SQLite files
+*.db
+# pytest
+.pytest_cache/
+# Coverage
+.coverage
+cov_html/
+cov_xml

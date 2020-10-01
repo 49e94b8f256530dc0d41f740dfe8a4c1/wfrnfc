@@ -1,0 +1,20 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+pytest = "*"
+pytest-cov = "*"
+pytest-flask = "*"
+
+[packages]
+# spidev = "*"
+# mfrc522 = "*"
+flask = "*"
+peewee = "*"
+python-dotenv = "*"
+flask-api = "*"
+
+[requires]
+python_version = "3"
