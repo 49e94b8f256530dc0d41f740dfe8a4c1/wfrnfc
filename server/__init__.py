@@ -1,23 +1,32 @@
+import logging
 import os
+import random
+import string
+import sys
 
+import coloredlogs
 from dotenv import find_dotenv, load_dotenv
+from flask import abort, g, jsonify, request
+from flask_api import FlaskAPI, status
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required
+from peewee import BooleanField, CharField, Model, SqliteDatabase, TextField
+from playhouse.shortcuts import model_to_dict
+from werkzeug.security import check_password_hash
 
-from flask import g
-from flask_api import FlaskAPI
-from peewee import Model, SqliteDatabase
+from .models import Object, Tag, Terminal, User, database
 
-# Load environment variables
-load_dotenv()
-PEEWEE_DATABASE = os.getenv("PEEWEE_DATABASE")
-DEBUG = os.getenv("DEBUG")
-FLASK_ENV = os.getenv("FLASK_ENV")
-SECRET_KEY = os.getenv("SECRET_KEY")
-# End load environment variables
+logging.basicConfig(
+    format="[%(asctime)s] %(levelname)s: %(message)s", level=logging.INFO
+)
+logger = logging.getLogger(__name__)
+coloredlogs.install(level="DEBUG")
 
+
+# Flask Setup #
 app = FlaskAPI(__name__)
-app.config.from_object(__name__)
-
-database = SqliteDatabase(PEEWEE_DATABASE)
+app.config.from_object("server.config.Config")
+jwt = JWTManager(app)
+# End Flask Setup
 
 # Request Handlers
 # These two hooks are provided by flask and we will use them
@@ -25,7 +34,7 @@ database = SqliteDatabase(PEEWEE_DATABASE)
 @app.before_request
 def before_request():
     g.db = database
-    g.db.connect()
+    g.db.connect(reuse_if_open=True)
 
 
 @app.after_request
@@ -36,42 +45,50 @@ def after_request(response):
 
 # End Request Handlers
 
-# Models
-class BaseModel(Model):
-    class Meta:
-        database = database
-
-
-class Terminal(BaseModel):
-    pass
-
-
-class Object(BaseModel):
-    pass
-
-
-class Tag(BaseModel):
-    pass
-
-
-# End Models
-
-# Utilities #
-def create_tables() -> None:
-    with database:
-        database.create_tables([Object, Tag])
-
-
-# End Utilites #
-
 # Routes #
-@app.route("/", methods=["GET", "POST"])
-def hello_world():
-    return {"hello": "world"}
+# LoginView
+@app.route("/api/v1/login", methods=["POST"])
+def login():
+    email = request.data.get("email")
+    password = request.data.get("password")
+
+    user = User.select().where(User.email == email)
+
+    if not user:
+        return {"error": "401"}, 401
+
+    user = user[0]
+
+    if not check_password_hash(user.password, password):
+        return {"error": "401"}, 401
+
+    return {"access_token": create_access_token(identity=user.email)}
+
+
+# Terminal ListView
+@app.route("/api/v1/terminals", methods=["GET", "POST"])
+@jwt_required
+def terminals():
+    if request.method == "POST":
+        registration_token = "".join(
+            random.choices(string.ascii_uppercase + string.digits, k=14)
+        )
+        terminal = Terminal.create(registration_token=registration_token)
+        return model_to_dict(terminal), status.HTTP_201_CREATED
+    return [model_to_dict(terminal) for terminal in Terminal.select()]
+
+
+# Terminal DetailView
+@app.route("/api/v1/terminals/<int:id>", methods=["GET", "PUT", "DELETE"])
+@jwt_required
+def terminal(id):
+    return model_to_dict(Terminal.get_by_id(id))
+
+
+# Terminal RegisterView
+@app.route("/api/v1/terminals/register", methods=["POST"])
+def register_terminal():
+    pass
 
 
 # End Routes #
-
-if __name__ == "__main__":
-    create_tables()
-    app.run()
