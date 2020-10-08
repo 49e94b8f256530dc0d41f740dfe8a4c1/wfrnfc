@@ -24,10 +24,7 @@ coloredlogs.install(level="DEBUG")
 
 # Flask Setup #
 app = FlaskAPI(__name__)
-if "pytest" in sys.modules:
-    app.config.from_object("server.config.TestConfig")
-else:  # pragma no cover
-    app.config.from_object("server.config.Config")
+app.config.from_object("server.config.Config")
 jwt = JWTManager(app)
 # End Flask Setup
 
