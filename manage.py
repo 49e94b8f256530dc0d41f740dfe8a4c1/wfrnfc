@@ -70,10 +70,14 @@ if __name__ == "__main__":
             sys_exit(0)
         password = getpass.getpass()
         password = password.strip()
-        logging.debug(f"Authenticating with credentials `{email}:{password}`")
+        logging.debug(f"Trying to authenticate superuser `{email}`")
+        try:
         status_code, response = request_manager.make_request(
             "/api/v1/login", "POST", data={"email": email, "password": password}
         )
+        except Exception as e:
+            logging.error(e)
+            sys_exit(0)
         if status_code != 200:
             logging.error("Invalid authentication credentials")
             sys_exit(0)
