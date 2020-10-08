@@ -12,11 +12,15 @@ from tabulate import tabulate
 import server.utils as utils
 from server import app
 
+load_dotenv(verbose=True)
+
 
 class RequestManager:
     headers = {}
-    # TODO: Load base_url from env
-    base_url = "http://127.0.0.1:5000"
+    base_url = f"http://{os.getenv('SERVER_HOST')}:{os.getenv('SERVER_PORT')}"
+
+    def __init__(self):
+        logging.info(f"RequestManager will use base_url `{self.base_url}`")
 
     def make_request(self, url: str, method: str, **kwargs):
         url = f"{self.base_url}{url}"
