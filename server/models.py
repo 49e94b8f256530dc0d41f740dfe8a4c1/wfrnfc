@@ -1,10 +1,15 @@
 import os
+import sys
 
 from dotenv import find_dotenv, load_dotenv
 from peewee import BooleanField, CharField, Model, SqliteDatabase, TextField
 
 load_dotenv()
-PEEWEE_DATABASE = os.getenv("PEEWEE_DATABASE")
+if "pytest" in sys.modules:
+    PEEWEE_DATABASE = os.getenv("TEST_DATABASE")
+else:  # pragma no cover
+    PEEWEE_DATABASE = os.getenv("DATABASE")
+
 
 database = SqliteDatabase(PEEWEE_DATABASE)
 

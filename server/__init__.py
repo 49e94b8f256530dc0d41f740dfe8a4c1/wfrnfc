@@ -26,7 +26,7 @@ coloredlogs.install(level="DEBUG")
 app = FlaskAPI(__name__)
 if "pytest" in sys.modules:
     app.config.from_object("server.config.TestConfig")
-else:
+else:  # pragma no cover
     app.config.from_object("server.config.Config")
 jwt = JWTManager(app)
 # End Flask Setup
@@ -86,6 +86,12 @@ def terminals():
 @jwt_required
 def terminal(id):
     return model_to_dict(Terminal.get_by_id(id))
+
+
+# Terminal RegisterView
+@app.route("/api/v1/terminals/register", methods=["POST"])
+def register_terminal():
+    pass
 
 
 # End Routes #

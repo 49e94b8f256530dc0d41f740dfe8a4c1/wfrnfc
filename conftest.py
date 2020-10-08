@@ -20,7 +20,8 @@ def database():
 
     create_tables()
     yield
-    os.unlink(os.getenv("PEEWEE_DATABASE"))
+
+    os.unlink(os.getenv("TEST_DATABASE"))
 
 
 @pytest.fixture
