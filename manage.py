@@ -104,7 +104,21 @@ if __name__ == "__main__":
             else:
                 pass
     elif args.action == "createsuperuser":
-        createsuperuser(email="foo@bar.org", password="test")
+        logging.info("Requesting potential authentication credentials")
+        email = input("Email:")
+        email = email.strip()
+        if not email:
+            logging.error("You need an email address to access the admin console")
+            sys_exit(0)
+        password1 = getpass.getpass()
+        password1 = password1.strip()
+        password2 = getpass.getpass(prompt="Repeat password:")
+        password2 = password2.strip()
+        if password1 != password2:
+            logging.error("Passwords do not match")
+            sys_exit(0)
+        createsuperuser(email=email, password=password1)
+        logging.info(f"Superuser `{email}` successfully created")
     elif args.action == "runserver":
         runserver()
     else:
