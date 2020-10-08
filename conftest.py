@@ -1,6 +1,7 @@
 import os
 
 import pytest
+from dotenv import load_dotenv
 from flask_jwt_extended import create_access_token
 
 import server
@@ -10,13 +11,16 @@ from server.utils import create_tables
 flask_app = server.app
 
 
+load_dotenv()
+
+
 @pytest.fixture(autouse=True)
 def database():
     from server.utils import create_tables
 
     create_tables()
     yield
-    os.unlink("sqlite.db")
+    os.unlink(os.getenv("PEEWEE_DATABASE"))
 
 
 @pytest.fixture
@@ -25,7 +29,9 @@ def app():
     flask_app.config["PRESERVE_CONTEXT_ON_EXCEPTION"] = False
     flask_app.config["TESTING"] = True
     flask_app.config["WTF_CSRF_ENABLED"] = False
+
     create_tables()
+
     yield flask_app
 
 

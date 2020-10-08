@@ -2,6 +2,7 @@ import logging
 import os
 import random
 import string
+import sys
 
 import coloredlogs
 from dotenv import find_dotenv, load_dotenv
@@ -20,17 +21,13 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 coloredlogs.install(level="DEBUG")
 
-# Load environment variables
-load_dotenv()
-PEEWEE_DATABASE = os.getenv("PEEWEE_DATABASE")
-DEBUG = os.getenv("DEBUG")
-FLASK_ENV = os.getenv("FLASK_ENV")
-SECRET_KEY = os.getenv("SECRET_KEY")
-# End load environment variables
 
 # Flask Setup #
 app = FlaskAPI(__name__)
-app.config.from_object(__name__)
+if "pytest" in sys.modules:
+    app.config.from_object("server.config.TestConfig")
+else:
+    app.config.from_object("server.config.Config")
 jwt = JWTManager(app)
 # End Flask Setup
 
