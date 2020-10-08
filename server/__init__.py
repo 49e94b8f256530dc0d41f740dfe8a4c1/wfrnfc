@@ -7,7 +7,6 @@ import coloredlogs
 from dotenv import find_dotenv, load_dotenv
 from flask import abort, g, jsonify, request
 from flask_api import FlaskAPI, status
-from flask_cors import CORS
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required
 from peewee import BooleanField, CharField, Model, SqliteDatabase, TextField
 from playhouse.shortcuts import model_to_dict
