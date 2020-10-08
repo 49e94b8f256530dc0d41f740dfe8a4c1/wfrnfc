@@ -2,17 +2,19 @@ import argparse
 import getpass
 import json
 import logging
+import os
 import select
 import sys
 
 import cowsay
 import requests
+from dotenv import load_dotenv
 from tabulate import tabulate
 
 import server.utils as utils
 from server import app
 
-load_dotenv(verbose=True)
+load_dotenv()
 
 
 class RequestManager:
@@ -76,9 +78,9 @@ if __name__ == "__main__":
         password = password.strip()
         logging.debug(f"Trying to authenticate superuser `{email}`")
         try:
-        status_code, response = request_manager.make_request(
-            "/api/v1/login", "POST", data={"email": email, "password": password}
-        )
+            status_code, response = request_manager.make_request(
+                "/api/v1/login", "POST", data={"email": email, "password": password}
+            )
         except Exception as e:
             logging.error(e)
             sys_exit(0)
@@ -92,6 +94,7 @@ if __name__ == "__main__":
         logging.info("Enter `q` or `Ctrl+C` to quit")
         while True:
             input = select.select([sys.stdin], [], [], 1)[0]
+            # TODO: Add help command
             if input:
                 command = sys.stdin.readline().rstrip()
                 if command == "q":
@@ -100,13 +103,16 @@ if __name__ == "__main__":
                     _, response = request_manager.make_request(
                         "/api/v1/terminals", "GET"
                     )
-                    logging.info("Terminals")
+                    logging.info("Listing terminals")
+                    # TODO: Show message if terminals empty
                     print(tabulate(response, headers="keys"))
                 elif command == "create terminal":
                     _, response = request_manager.make_request(
                         "/api/v1/terminals", "POST"
                     )
-                    logging.info("Created terminal")
+                    logging.info(
+                        f"Created terminal {response.get('registration_token')}"
+                    )
                 else:
                     logging.info(f"Command `{command}` not found")
             else:
