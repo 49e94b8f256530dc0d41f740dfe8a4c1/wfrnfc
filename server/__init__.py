@@ -94,8 +94,9 @@ def tags():
 
 
 # Tag DetailView
-@app.route("/api/v1/tags/<content>", methods=["POST"])
-def tag(content):
+@app.route("/api/v1/tags/verify", methods=["POST"])
+def verify_tag():
+    content = request.data.get("content")
     try:
         tag = Tag.get(Tag.content == content)
         return model_to_dict(tag)
