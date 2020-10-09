@@ -29,9 +29,5 @@ class Terminal(BaseModel):
     registration_token = CharField(max_length=255)
 
 
-class Object(BaseModel):
-    pass
-
-
 class Tag(BaseModel):
-    pass
+    content = CharField(max_length=255)
