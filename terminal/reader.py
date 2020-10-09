@@ -14,7 +14,7 @@ reader = SimpleMFRC522()
 if __name__ == "__main__":
     if len(sys.argv) == 1:
         logging.error("No terminal registration token specified")
-        sys_exit()
+        sys.exit(0)
     registration_token = sys.argv[1]
     logging.debug(f"Started terminal with registration token `{registration_token}`")
     try:
