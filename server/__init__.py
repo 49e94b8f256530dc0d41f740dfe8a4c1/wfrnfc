@@ -13,7 +13,7 @@ from peewee import BooleanField, CharField, Model, SqliteDatabase, TextField
 from playhouse.shortcuts import model_to_dict
 from werkzeug.security import check_password_hash
 
-from .models import Object, Tag, Terminal, User, database
+from .models import Tag, Terminal, User, database
 
 logging.basicConfig(
     format="[%(asctime)s] %(levelname)s: %(message)s", level=logging.INFO
@@ -65,7 +65,7 @@ def login():
     return {"access_token": create_access_token(identity=user.email)}
 
 
-# Terminal ListView
+# Terminal Create/ListView
 @app.route("/api/v1/terminals", methods=["GET", "POST"])
 @jwt_required
 def terminals():
@@ -85,10 +85,12 @@ def terminal(id):
     return model_to_dict(Terminal.get_by_id(id))
 
 
-# Terminal RegisterView
-@app.route("/api/v1/terminals/register", methods=["POST"])
-def register_terminal():
-    pass
+# Tag CreateView
+@app.route("/api/v1/tags", methods=["POST"])
+def create_tag():
+    content = "".join(random.choices(string.ascii_uppercase + string.digits, k=14))
+    tag = Tag.create(content=content)
+    return model_to_dict(tag), status.HTTP_201_CREATED
 
 
 # End Routes #

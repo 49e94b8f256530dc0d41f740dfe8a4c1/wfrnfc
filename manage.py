@@ -8,11 +8,13 @@ import sys
 
 import cowsay
 import requests
+import RPi.GPIO as GPIO
 from dotenv import load_dotenv
 from tabulate import tabulate
 
 import server.utils as utils
 from server import app
+from terminal.writer import write_tag
 
 load_dotenv()
 
@@ -57,6 +59,7 @@ if __name__ == "__main__":
     def sys_exit(code=0):
         if code > 0:
             parser.print_help()
+        GPIO.cleanup()
         exit(code)
 
     if len(sys.argv) == 1:
@@ -113,6 +116,10 @@ if __name__ == "__main__":
                     logging.info(
                         f"Created terminal {response.get('registration_token')}"
                     )
+                elif command == "write tag":
+                    _, response = request_manager.make_request("/api/v1/tags", "POST")
+                    logging.info(f"Created tag {response.get('content')}")
+                    write_tag(response.get("content"))
                 else:
                     logging.info(f"Command `{command}` not found")
             else:

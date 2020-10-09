@@ -1,11 +1,11 @@
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from .models import Object, Tag, Terminal, User, database
+from .models import Tag, Terminal, User, database
 
 
 def create_tables() -> None:  # pragma: no cover
     with database:
-        database.create_tables([User, Terminal, Object, Tag])
+        database.create_tables([User, Terminal, Tag])
 
 
 def createsuperuser(email: str, password: str) -> None:
