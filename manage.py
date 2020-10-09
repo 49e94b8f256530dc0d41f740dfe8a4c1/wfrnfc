@@ -8,6 +8,7 @@ import sys
 
 import cowsay
 import requests
+import RPi.GPIO as GPIO
 from dotenv import load_dotenv
 from tabulate import tabulate
 
@@ -58,6 +59,7 @@ if __name__ == "__main__":
     def sys_exit(code=0):
         if code > 0:
             parser.print_help()
+        GPIO.cleanup()
         exit(code)
 
     if len(sys.argv) == 1:

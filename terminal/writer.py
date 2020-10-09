@@ -3,6 +3,8 @@ import logging
 import RPi.GPIO as GPIO
 from mfrc522 import SimpleMFRC522
 
+logger = logging.getLogger(__name__)
+
 reader = SimpleMFRC522()
 
 
