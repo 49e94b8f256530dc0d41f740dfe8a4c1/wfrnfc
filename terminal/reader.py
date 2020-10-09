@@ -1,10 +1,11 @@
 import logging
 import sys
 from time import sleep
-import requests
 
 import coloredlogs
+import requests
 import RPi.GPIO as GPIO
+from dotenv import load_dotenv
 from mfrc522 import SimpleMFRC522
 
 logger = logging.getLogger(__name__)
