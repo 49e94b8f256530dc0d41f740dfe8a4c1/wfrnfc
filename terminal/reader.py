@@ -23,7 +23,7 @@ if __name__ == "__main__":
         logging.error("No terminal registration token specified")
         sys.exit(0)
     registration_token = sys.argv[1]
-    response = requests.get(f"/api/v1/{registration_token}")
+    response = requests.get(f"{base_url}/api/v1/{registration_token}")
     if response.status_code == 404:
         logging.error("Terminal unknown")
         sys.exit(0)
