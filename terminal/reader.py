@@ -2,15 +2,21 @@ import logging
 import sys
 from time import sleep
 
+import coloredlogs
 import RPi.GPIO as GPIO
 from mfrc522 import SimpleMFRC522
 
-logging.basicConfig(format='[%(asctime)s] %(levelname)s:%(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
+coloredlogs.install(level="DEBUG")
 
 reader = SimpleMFRC522()
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+    if len(sys.argv) == 1:
+        logging.error("No terminal registration token specified")
+        sys_exit()
+    registration_token = sys.argv[1]
+    logging.debug(f"Started terminal with registration token `{registration_token}`")
     try:
         while True:
             logger.info("Hold a tag near the reader")
