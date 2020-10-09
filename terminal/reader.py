@@ -6,7 +6,7 @@ from time import sleep
 import coloredlogs
 import requests
 import RPi.GPIO as GPIO
-from dotenv import load_dotenv
+from dotenv import find_dotenv, load_dotenv
 from mfrc522 import SimpleMFRC522
 
 logger = logging.getLogger(__name__)
@@ -14,7 +14,7 @@ coloredlogs.install(level="DEBUG")
 
 reader = SimpleMFRC522()
 
-load_dotenv()
+load_dotenv(find_dotenv())
 
 if __name__ == "__main__":
     base_url = f"http://{os.getenv('SERVER_HOST')}:{os.getenv('SERVER_PORT')}"
