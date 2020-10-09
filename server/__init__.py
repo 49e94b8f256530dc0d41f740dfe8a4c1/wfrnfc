@@ -15,9 +15,6 @@ from werkzeug.security import check_password_hash
 
 from .models import Tag, Terminal, User, database
 
-logging.basicConfig(
-    format="[%(asctime)s] %(levelname)s: %(message)s", level=logging.INFO
-)
 logger = logging.getLogger(__name__)
 coloredlogs.install(level="DEBUG")
 
