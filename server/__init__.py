@@ -84,7 +84,7 @@ def terminal(id):
 
 # Tag CreateView
 @app.route("/api/v1/tags", methods=["POST"])
-def create_tag():
+def tags():
     content = "".join(random.choices(string.ascii_uppercase + string.digits, k=14))
     tag = Tag.create(content=content)
     return model_to_dict(tag), status.HTTP_201_CREATED
