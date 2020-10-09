@@ -55,3 +55,10 @@ class TestAPI:
         res = client.get(url_for("terminal", id=1), headers=credentials)
         assert res.status_code == 200
         assert res.json == {"id": 1, "registration_token": registration_token}
+
+    def test_api_tag_creation(self, client, credentials):
+        res = client.post(
+            url_for("tags"),
+            headers=credentials,
+        )
+        assert res.status_code == 201
