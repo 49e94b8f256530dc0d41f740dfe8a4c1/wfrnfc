@@ -38,7 +38,7 @@ if __name__ == "__main__":
             response = requests.post(
                 f"{base_url}/api/v1/tags/verify", data={"content": data}
             )
-            if response.status_code == 404:
+            if response.status_code == 200:
                 logger.info("Authentication successful")
             else:
                 logger.error("Authentication unsuccessful")
