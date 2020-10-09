@@ -52,9 +52,11 @@ class TestAPI:
         registration_token = res.json.get("registration_token")
         res = client.get(url_for("terminals"), headers=credentials)
         assert res.json == [{"id": 1, "registration_token": registration_token}]
-        res = client.get(url_for("terminal", id=1), headers=credentials)
+        res = client.get(url_for("terminal", registration_token=registration_token))
         assert res.status_code == 200
-        assert res.json == {"id": 1, "registration_token": registration_token}
+        res = client.get(url_for("terminal", registration_token="foo"))
+        assert res.status_code == 404
+        assert res.json == {"error": "404"}
 
     def test_api_tag_creation(self, client, credentials):
         res = client.post(

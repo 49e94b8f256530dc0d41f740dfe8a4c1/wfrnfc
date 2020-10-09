@@ -1,6 +1,7 @@
 import logging
 import sys
 from time import sleep
+import requests
 
 import coloredlogs
 import RPi.GPIO as GPIO
@@ -11,11 +12,19 @@ coloredlogs.install(level="DEBUG")
 
 reader = SimpleMFRC522()
 
+load_dotenv()
+
 if __name__ == "__main__":
+    base_url = f"http://{os.getenv('SERVER_HOST')}:{os.getenv('SERVER_PORT')}"
+    logger.info(f"Using base_url `{base_url}`")
     if len(sys.argv) == 1:
         logging.error("No terminal registration token specified")
         sys.exit(0)
     registration_token = sys.argv[1]
+    response = requests.get(f"/api/v1/{registration_token}")
+    if response.status_code == 404:
+        logging.error("Terminal unknown")
+        sys.exit(0)
     logging.debug(f"Started terminal with registration token `{registration_token}`")
     try:
         while True:

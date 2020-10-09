@@ -76,10 +76,13 @@ def terminals():
 
 
 # Terminal DetailView
-@app.route("/api/v1/terminals/<int:id>", methods=["GET", "PUT", "DELETE"])
-@jwt_required
-def terminal(id):
-    return model_to_dict(Terminal.get_by_id(id))
+@app.route("/api/v1/terminals/<registration_token>", methods=["GET"])
+def terminal(registration_token):
+    try:
+        terminal = Terminal.get(Terminal.registration_token == registration_token)
+        return model_to_dict(terminal)
+    except:
+        return {"error": "404"}, 404
 
 
 # Tag CreateView
