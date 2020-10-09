@@ -93,4 +93,14 @@ def tags():
     return model_to_dict(tag), status.HTTP_201_CREATED
 
 
+# Tag DetailView
+@app.route("/api/v1/tags/<content>", methods=["POST"])
+def tag(content):
+    try:
+        tag = Tag.get(Tag.content == content)
+        return model_to_dict(tag)
+    except:
+        return {"error": "404"}, 404
+
+
 # End Routes #

@@ -32,7 +32,13 @@ if __name__ == "__main__":
         while True:
             logger.info("Hold a tag near the reader")
             id, data = reader.read()
-            logger.info(f"Id: {id} Data: {data}")
+            logger.info("Tag read successfully")
+            logger.debug(f"id `{id}` data `{data}`")
+            response = requests.get(f"{base_url}/api/v1/tags/{data}")
+            if response.status_code == 404:
+                logger.info("Authentication successful")
+            else:
+                logger.error("Authentication unsuccessful")
             sleep(3)
     except KeyboardInterrupt:
         logger.debug("Cleanup GPIO")
