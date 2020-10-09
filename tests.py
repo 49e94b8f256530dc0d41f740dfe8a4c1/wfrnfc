@@ -4,7 +4,7 @@ import playhouse
 import pytest
 from flask import url_for
 
-from server.models import User
+from server.models import User, Tag
 from server.utils import createsuperuser
 
 
@@ -64,3 +64,16 @@ class TestAPI:
             headers=credentials,
         )
         assert res.status_code == 201
+        tag = Tag.get(Tag.id == 1)
+        res = client.post(
+            url_for("verify_tag"),
+            data=json.dumps({"content": "foo"}),
+            content_type="application/json",
+        )
+        assert res.status_code == 404
+        res = client.post(
+            url_for("verify_tag"),
+            data=json.dumps({"content": tag.content}),
+            content_type="application/json",
+        )
+        assert res.status_code == 200
