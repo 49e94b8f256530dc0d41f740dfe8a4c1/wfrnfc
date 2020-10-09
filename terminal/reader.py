@@ -23,9 +23,9 @@ if __name__ == "__main__":
         logging.error("No terminal registration token specified")
         sys.exit(0)
     registration_token = sys.argv[1]
-    response = requests.get(f"{base_url}/api/v1/{registration_token}")
+    response = requests.get(f"{base_url}/api/v1/terminals/{registration_token}")
     if response.status_code == 404:
-        logging.error("Terminal unknown")
+        logging.error("Terminal not found")
         sys.exit(0)
     logging.debug(f"Started terminal with registration token `{registration_token}`")
     try:
