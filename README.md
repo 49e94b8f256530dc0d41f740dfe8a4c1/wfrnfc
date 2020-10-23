@@ -83,3 +83,5 @@ In order to showcase the usefulness of RFID systems, this project presents an RF
 ## Dependencies
 
 1. LCD Library - https://github.com/sterlingbeason/LCD-1602-I2C
+
+2. Matrix Keypad Library - https://github.com/Freenove/Freenove_Ultimate_Starter_Kit_for_Raspberry_Pi/blob/master/Code/Python_Code/22.1.1_MatrixKeypad/Keypad.py
