@@ -28,8 +28,8 @@ keys = [
     "#",
     "D",
 ]
-rowsPins = [12, 16, 18, 22]  # connect to the row pinouts of the keypad
-colsPins = [19, 15, 13, 11]  # connect to the column pinouts of the keypad
+rowsPins = [32, 36, 38, 40]  # connect to the row pinouts of the keypad
+colsPins = [19, 33, 35, 37]  # connect to the column pinouts of the keypad
 
 
 def loop():
