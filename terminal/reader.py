@@ -45,8 +45,12 @@ if __name__ == "__main__":
             )
             if response.status_code == 200:
                 logger.info("Authentication successful")
+                lcd.message("Authentication", 1)
+                lcd.message("successful", 2)
             else:
                 logger.error("Authentication unsuccessful")
+                lcd.message("Authentication", 1)
+                lcd.message("unsuccessful", 2)
             sleep(3)
     except KeyboardInterrupt:
         logger.debug("Clear LCD")
