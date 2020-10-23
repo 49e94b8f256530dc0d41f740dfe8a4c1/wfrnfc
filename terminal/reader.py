@@ -9,6 +9,8 @@ import RPi.GPIO as GPIO
 from dotenv import find_dotenv, load_dotenv
 from mfrc522 import SimpleMFRC522
 
+from LCD import LCD
+
 logger = logging.getLogger(__name__)
 coloredlogs.install(level="DEBUG")
 
@@ -28,9 +30,12 @@ if __name__ == "__main__":
         logging.error("Terminal not found")
         sys.exit(0)
     logging.debug(f"Started terminal with registration token `{registration_token}`")
+    lcd = LCD(2, 0x27, True)
     try:
         while True:
             logger.info("Hold a tag near the reader")
+            lcd.message("WFRNFC RFID", 1)
+            lcd.message("Access Control", 2)
             id, data = reader.read()
             logger.info("Tag read successfully")
             logger.debug(f"id `{id}` data `{data}`")
@@ -40,10 +45,16 @@ if __name__ == "__main__":
             )
             if response.status_code == 200:
                 logger.info("Authentication successful")
+                lcd.message("Authentication", 1)
+                lcd.message("successful", 2)
             else:
                 logger.error("Authentication unsuccessful")
+                lcd.message("Authentication", 1)
+                lcd.message("unsuccessful", 2)
             sleep(3)
     except KeyboardInterrupt:
+        logger.debug("Clear LCD")
+        lcd.clear()
         logger.debug("Cleanup GPIO")
         GPIO.cleanup()
         raise
