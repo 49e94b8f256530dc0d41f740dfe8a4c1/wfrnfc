@@ -21,6 +21,7 @@ cowsay = "*"
 requests = "*"
 coloredlogs = "*"
 tabulate = "*"
+smbus = "*"
 
 [requires]
 python_version = "3"

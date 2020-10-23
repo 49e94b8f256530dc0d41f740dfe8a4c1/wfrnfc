@@ -35,7 +35,7 @@ if __name__ == "__main__":
         while True:
             logger.info("Hold a tag near the reader")
             lcd.message("WFRNFC RFID", 1)
-            lcd.message("Access Control")
+            lcd.message("Access Control", 2)
             id, data = reader.read()
             logger.info("Tag read successfully")
             logger.debug(f"id `{id}` data `{data}`")
