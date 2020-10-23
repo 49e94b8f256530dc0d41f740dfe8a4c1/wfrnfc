@@ -1,3 +1,4 @@
+from LCD import LCD
 import logging
 import os
 import sys
@@ -28,9 +29,12 @@ if __name__ == "__main__":
         logging.error("Terminal not found")
         sys.exit(0)
     logging.debug(f"Started terminal with registration token `{registration_token}`")
+    lcd = LCD(2, 0x27, True)
     try:
         while True:
             logger.info("Hold a tag near the reader")
+            lcd.message("WFRNFC RFID", 1)
+            lcd.message("Access Control")
             id, data = reader.read()
             logger.info("Tag read successfully")
             logger.debug(f"id `{id}` data `{data}`")
@@ -44,6 +48,8 @@ if __name__ == "__main__":
                 logger.error("Authentication unsuccessful")
             sleep(3)
     except KeyboardInterrupt:
+        logger.debug("Clear LCD")
+        lcd.clear()
         logger.debug("Cleanup GPIO")
         GPIO.cleanup()
         raise
