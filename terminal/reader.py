@@ -1,4 +1,3 @@
-import LCD
 import logging
 import os
 import sys
@@ -9,6 +8,8 @@ import requests
 import RPi.GPIO as GPIO
 from dotenv import find_dotenv, load_dotenv
 from mfrc522 import SimpleMFRC522
+
+from LCD import LCD
 
 logger = logging.getLogger(__name__)
 coloredlogs.install(level="DEBUG")
