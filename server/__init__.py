@@ -15,9 +15,6 @@ from werkzeug.security import check_password_hash
 
 from .models import Tag, Terminal, User, database
 
-logging.basicConfig(
-    format="[%(asctime)s] %(levelname)s: %(message)s", level=logging.INFO
-)
 logger = logging.getLogger(__name__)
 coloredlogs.install(level="DEBUG")
 
@@ -79,18 +76,32 @@ def terminals():
 
 
 # Terminal DetailView
-@app.route("/api/v1/terminals/<int:id>", methods=["GET", "PUT", "DELETE"])
-@jwt_required
-def terminal(id):
-    return model_to_dict(Terminal.get_by_id(id))
+@app.route("/api/v1/terminals/<registration_token>", methods=["GET"])
+def terminal(registration_token):
+    try:
+        terminal = Terminal.get(Terminal.registration_token == registration_token)
+        return model_to_dict(terminal)
+    except:
+        return {"error": "404"}, 404
 
 
 # Tag CreateView
 @app.route("/api/v1/tags", methods=["POST"])
-def create_tag():
+def tags():
     content = "".join(random.choices(string.ascii_uppercase + string.digits, k=14))
     tag = Tag.create(content=content)
     return model_to_dict(tag), status.HTTP_201_CREATED
+
+
+# Tag DetailView
+@app.route("/api/v1/tags/verify", methods=["POST"])
+def verify_tag():
+    content = request.data.get("content")
+    try:
+        tag = Tag.get(Tag.content == content)
+        return model_to_dict(tag)
+    except:
+        return {"error": "404"}, 404
 
 
 # End Routes #
