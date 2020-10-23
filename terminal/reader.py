@@ -1,4 +1,4 @@
-from LCD import LCD
+import LCD
 import logging
 import os
 import sys
