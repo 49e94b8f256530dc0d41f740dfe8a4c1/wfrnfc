@@ -1,7 +1,7 @@
 import logging
 import os
 import sys
-from time import sleep
+import time
 
 import coloredlogs
 import requests
@@ -15,10 +15,18 @@ from LCD import LCD
 logger = logging.getLogger(__name__)
 coloredlogs.install(level="DEBUG")
 
+servo = 18
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(servo, GPIO.OUT)
+
+p = GPIO.PWM(servo, 50)
+
 READER_TIMEOUT = 15
+DOOR_TIMEOUT = 5
 
 reader = SimpleMFRC522()
 
+# Keypad setup
 ROWS = 4  # number of rows of the Keypad
 COLS = 4  # number of columns of the Keypad
 keys = [
@@ -60,6 +68,8 @@ if __name__ == "__main__":
     lcd = LCD(2, 0x27, True)
     keypad = Keypad.Keypad(keys, rowsPins, colsPins, ROWS, COLS)  # create Keypad object
     keypad.setDebounceTime(50)  # set the debounce time
+    p = GPIO.PWM(servo, 50)
+    p.start(2.5)
     try:
         while True:
             logger.info("Hold a tag near the reader")
@@ -94,6 +104,11 @@ if __name__ == "__main__":
                     logging.debug("Door unlocked")
                     lcd.message("Welcome!", 1)
                     lcd.message("Door unlocked", 2)
+                    p.start(2.5)
+                    p.ChangeDutyCycle(7.5)
+                    time.sleep(DOOR_TIMEOUT)
+                    p.ChangeDutyCycle(2.5)
+                    p.stop()
                 else:
                     logging.error("TAN verification unsuccessful")
                     lcd.message("TAN verification", 1)
@@ -102,10 +117,11 @@ if __name__ == "__main__":
                 logger.error("Authentication unsuccessful")
                 lcd.message("Authentication", 1)
                 lcd.message("unsuccessful", 2)
-            sleep(READER_TIMEOUT)
+            time.sleep(READER_TIMEOUT)
     except KeyboardInterrupt:
         logger.debug("Clear LCD")
         lcd.clear()
         logger.debug("Cleanup GPIO")
         GPIO.cleanup()
+        p.stop()
         raise
