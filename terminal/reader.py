@@ -107,7 +107,6 @@ if __name__ == "__main__":
                     servo.ChangeDutyCycle(12.5)
                     time.sleep(1)
                     servo.ChangeDutyCycle(2.5)
-                    servo.stop()
                 else:
                     logging.error("TAN verification unsuccessful")
                     lcd.message("TAN verification", 1)
