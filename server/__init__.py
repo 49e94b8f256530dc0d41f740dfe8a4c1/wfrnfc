@@ -107,7 +107,7 @@ def verify_tag():
 
 # TAN VerificationView
 @app.route("/api/v1/tags/verify/tan", methods=["POST"])
-def verify_tan():
+def verify_tan():  # pragma: no cover
     content = request.data.get("content")
     tan_key = request.data.get("tan_key")
     try:
