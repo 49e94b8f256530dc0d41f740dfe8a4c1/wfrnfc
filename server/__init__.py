@@ -109,11 +109,11 @@ def verify_tag():
 @app.route("/api/v1/tags/verify/tan", methods=["POST"])
 def verify_tan():
     content = request.data.get("content")
-    tan_key = request.data.get("tan_secret")
+    tan_key = request.data.get("tan_key")
     try:
         tag = Tag.get(Tag.content == content)
         totp = pyotp.TOTP(tag.tan_secret)
-        logging.debug(f"Retrieved {tag.tan_secret}")
+        logging.debug(f"Retrieved TAN Key {tag.tan_secret}")
         if totp.verify(tan_key):
             return 200
         else:
