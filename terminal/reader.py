@@ -15,6 +15,8 @@ from LCD import LCD
 logger = logging.getLogger(__name__)
 coloredlogs.install(level="DEBUG")
 
+READER_TIMEOUT = 15
+
 reader = SimpleMFRC522()
 
 ROWS = 4  # number of rows of the Keypad
@@ -79,10 +81,10 @@ if __name__ == "__main__":
                     key = keypad.getKey()
                     if key != keypad.NULL:
                         logging.info(f"Key {key} pressed")
+                        if key == "#":
+                            break
                         tan_key += key
                         lcd.message(tan_key, 2)
-                    if key == "#":
-                        break
                 logging.info(f"TAN Key {tan_key}")
                 lcd.message("Authentication successful", 1)
                 lcd.message("successful", 2)
@@ -90,7 +92,7 @@ if __name__ == "__main__":
                 logger.error("Authentication unsuccessful")
                 lcd.message("Authentication", 1)
                 lcd.message("unsuccessful", 2)
-            sleep(3)
+            sleep(READER_TIMEOUT)
     except KeyboardInterrupt:
         logger.debug("Clear LCD")
         lcd.clear()
