@@ -31,3 +31,4 @@ class Terminal(BaseModel):
 
 class Tag(BaseModel):
     content = CharField(max_length=255)
+    tan_secret = CharField(max_length=255)

@@ -6,6 +6,7 @@ import os
 import select
 import sys
 
+import pyotp
 import cowsay
 import requests
 import RPi.GPIO as GPIO
@@ -119,6 +120,11 @@ if __name__ == "__main__":
                 elif command == "write tag":
                     _, response = request_manager.make_request("/api/v1/tags", "POST")
                     logging.info(f"Created tag {response.get('content')}")
+                    logging.info(f"Generated TAN secret {response.get('tan_secret')}")
+                    tan_secret_uri = pyotp.totp.TOTP(
+                        response.get("tan_secret")
+                    ).provisioning_uri(name="alice@google.com", issuer_name="WFRNFC")
+                    logging.info(tan_secret_uri)
                     write_tag(response.get("content"))
                 else:
                     logging.info(f"Command `{command}` not found")

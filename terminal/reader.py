@@ -86,8 +86,16 @@ if __name__ == "__main__":
                         tan_key += key
                         lcd.message(tan_key, 2)
                 logging.info(f"Verifying TAN Key {tan_key}")
-                lcd.message("Welcome", 1)
-                lcd.message("Door unlocked", 2)
+                response = requests.post(
+                    f"{base_url}/api/v1/tags/verify/tan",
+                    data={"content": data, "tan_key": tan_key},
+                )
+                if response.status_code == 200:
+                    lcd.message("Welcome", 1)
+                    lcd.message("Door unlocked", 2)
+                else:
+                    lcd.message("TAN verification", 1)
+                    lcd.message("unsuccessful", 2)
             else:
                 logger.error("Authentication unsuccessful")
                 lcd.message("Authentication", 1)
