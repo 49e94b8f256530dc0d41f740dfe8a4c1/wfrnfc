@@ -9,12 +9,37 @@ import RPi.GPIO as GPIO
 from dotenv import find_dotenv, load_dotenv
 from mfrc522 import SimpleMFRC522
 
+import Keypad
 from LCD import LCD
 
 logger = logging.getLogger(__name__)
 coloredlogs.install(level="DEBUG")
 
 reader = SimpleMFRC522()
+
+ROWS = 4  # number of rows of the Keypad
+COLS = 4  # number of columns of the Keypad
+keys = [
+    "1",
+    "2",
+    "3",
+    "A",  # key code
+    "4",
+    "5",
+    "6",
+    "B",
+    "7",
+    "8",
+    "9",
+    "C",
+    "*",
+    "0",
+    "#",
+    "D",
+]
+rowsPins = [32, 36, 38, 40]  # connect to the row pinouts of the keypad
+colsPins = [31, 33, 35, 37]  # connect to the column pinouts of the keypad
+
 
 load_dotenv(find_dotenv())
 
@@ -31,6 +56,8 @@ if __name__ == "__main__":
         sys.exit(0)
     logging.debug(f"Started terminal with registration token `{registration_token}`")
     lcd = LCD(2, 0x27, True)
+    keypad = Keypad.Keypad(keys, rowsPins, colsPins, ROWS, COLS)  # create Keypad object
+    keypad.setDebounceTime(50)  # set the debounce time
     try:
         while True:
             logger.info("Hold a tag near the reader")
@@ -44,8 +71,18 @@ if __name__ == "__main__":
                 f"{base_url}/api/v1/tags/verify", data={"content": data}
             )
             if response.status_code == 200:
-                logger.info("Authentication successful")
-                lcd.message("Authentication", 1)
+                logger.info("Authentication successful, requesting TAN key")
+                lcd.message("Enter TAN key", 1)
+                tan_key = ""
+                while True:
+                    key = keypad.getKey()
+                    if key != keypad.NULL:
+                        logging.info(f"Key {key} pressed")
+                        tan_key += key
+                        lcd.message(tan_key, 2)
+                    if key == "#":
+                        break
+                lcd.message("Authentication successful", 1)
                 lcd.message("successful", 2)
             else:
                 logger.error("Authentication unsuccessful")
