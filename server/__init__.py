@@ -116,7 +116,7 @@ def verify_tan():
         logging.debug(f"Retrieved TAN Key {tag.tan_secret}")
         logging.debug(f"Verifying TAN key {tan_key}")
         if totp.verify(tan_key):
-            return 200
+            return {}, 200
         else:
             raise Exception()
     except:
