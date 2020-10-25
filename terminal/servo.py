@@ -1,8 +1,8 @@
 import RPi.GPIO as gpio
 import time
 
-servo = 12
-gpio.setmode(gpio.BOARD)
+servo = 18
+gpio.setmode(gpio.BCM)
 gpio.setup(servo, gpio.OUT)
 
 p = gpio.PWM(servo, 50)
