@@ -17,3 +17,4 @@ try:
         time.sleep(1)
 except KeyboardInterrupt:
     p.stop()
+    gpio.cleanup()
