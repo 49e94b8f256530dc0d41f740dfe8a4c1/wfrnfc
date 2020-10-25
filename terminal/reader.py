@@ -15,11 +15,11 @@ from LCD import LCD
 logger = logging.getLogger(__name__)
 coloredlogs.install(level="DEBUG")
 
-servo = 18
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(servo, GPIO.OUT)
+SERVO_PIN = 12
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(SERVO_PIN, GPIO.OUT)
 
-p = GPIO.PWM(servo, 50)
+p = GPIO.PWM(SERVO_PIN, 50)
 
 READER_TIMEOUT = 15
 DOOR_TIMEOUT = 5
@@ -68,7 +68,7 @@ if __name__ == "__main__":
     lcd = LCD(2, 0x27, True)
     keypad = Keypad.Keypad(keys, rowsPins, colsPins, ROWS, COLS)  # create Keypad object
     keypad.setDebounceTime(50)  # set the debounce time
-    p = GPIO.PWM(servo, 50)
+    p = GPIO.PWM(SERVO_PIN, 50)
     p.start(2.5)
     try:
         while True:
