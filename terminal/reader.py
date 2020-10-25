@@ -66,7 +66,6 @@ if __name__ == "__main__":
     keypad = Keypad.Keypad(keys, rowsPins, colsPins, ROWS, COLS)  # create Keypad object
     keypad.setDebounceTime(50)  # set the debounce time
     servo = GPIO.PWM(SERVO_PIN, 50)
-    servo.start(2.5)
     try:
         while True:
             logger.info("Hold a tag near the reader")
@@ -101,8 +100,12 @@ if __name__ == "__main__":
                     logging.debug("Door unlocked")
                     lcd.message("Welcome!", 1)
                     lcd.message("Door unlocked", 2)
+                    servo.start(2.5)
+                    time.sleep(1)
                     servo.ChangeDutyCycle(7.5)
-                    time.sleep(DOOR_TIMEOUT)
+                    time.sleep(1)
+                    servo.ChangeDutyCycle(12.5)
+                    time.sleep(1)
                     servo.ChangeDutyCycle(2.5)
                     servo.stop()
                 else:
