@@ -38,7 +38,7 @@ class Keypad(object):
     startTime = 0
     # Allows custom keymap, pin configuration, and keypad sizes.
     def __init__(self, usrKeyMap, row_Pins, col_Pins, num_Rows, num_Cols):
-        GPIO.setmode(GPIO.BOARD)
+        GPIO.setmode(GPIO.BCM)
         self.rowPins = row_Pins
         self.colPins = col_Pins
         self.numRows = num_Rows

@@ -47,8 +47,8 @@ keys = [
     "#",
     "D",
 ]
-rowsPins = [32, 36, 38, 40]  # connect to the row pinouts of the keypad
-colsPins = [31, 33, 35, 37]  # connect to the column pinouts of the keypad
+rowsPins = [12, 16, 20, 21]  # connect to the row pinouts of the keypad
+colsPins = [6, 13, 19, 26]  # connect to the column pinouts of the keypad
 
 
 load_dotenv(find_dotenv())
