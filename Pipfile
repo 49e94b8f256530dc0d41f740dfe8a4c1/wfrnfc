@@ -7,7 +7,7 @@ verify_ssl = true
 pytest = "*"
 pytest-cov = "*"
 pytest-flask = "*"
-importlib-metadata = "*"
+importlib-metadata = "1.7.0"
 
 [packages]
 # spidev = "*"
@@ -22,6 +22,7 @@ requests = "*"
 coloredlogs = "*"
 tabulate = "*"
 smbus = "*"
+pyotp = "*"
 
 [requires]
 python_version = "3"

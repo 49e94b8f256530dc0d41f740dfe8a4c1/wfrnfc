@@ -70,7 +70,7 @@ class TestAPI:
             data=json.dumps({"content": "foo"}),
             content_type="application/json",
         )
-        assert res.status_code == 404
+        assert res.status_code == 401
         res = client.post(
             url_for("verify_tag"),
             data=json.dumps({"content": tag.content}),

@@ -5,6 +5,7 @@ import string
 import sys
 
 import coloredlogs
+import pyotp
 from dotenv import find_dotenv, load_dotenv
 from flask import abort, g, jsonify, request
 from flask_api import FlaskAPI, status
@@ -89,7 +90,7 @@ def terminal(registration_token):
 @app.route("/api/v1/tags", methods=["POST"])
 def tags():
     content = "".join(random.choices(string.ascii_uppercase + string.digits, k=14))
-    tag = Tag.create(content=content)
+    tag = Tag.create(content=content, tan_secret=pyotp.random_base32())
     return model_to_dict(tag), status.HTTP_201_CREATED
 
 
@@ -99,9 +100,27 @@ def verify_tag():
     content = request.data.get("content")
     try:
         tag = Tag.get(Tag.content == content)
-        return model_to_dict(tag)
+        return {"content": tag.content}
     except:
-        return {"error": "404"}, 404
+        return {"error": "401"}, 401
+
+
+# TAN VerificationView
+@app.route("/api/v1/tags/verify/tan", methods=["POST"])
+def verify_tan():  # pragma: no cover
+    content = request.data.get("content")
+    tan_key = request.data.get("tan_key")
+    try:
+        tag = Tag.get(Tag.content == content)
+        totp = pyotp.TOTP(tag.tan_secret)
+        logging.debug(f"Retrieved TAN Key {tag.tan_secret}")
+        logging.debug(f"Verifying TAN key {tan_key}")
+        if totp.verify(tan_key):
+            return {}, 200
+        else:
+            raise Exception()
+    except:
+        return {"error": "401"}, 401
 
 
 # End Routes #
