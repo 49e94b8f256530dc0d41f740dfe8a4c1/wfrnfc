@@ -1,11 +1,11 @@
-import RPi.GPIO as gpio
+import RPi.GPIO as GPIO
 import time
 
-servo = 18
-gpio.setmode(gpio.BCM)
-gpio.setup(servo, gpio.OUT)
+SERVO_PIN = 12
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(SERVO_PIN, GPIO.OUT)
 
-p = gpio.PWM(servo, 50)
+p = GPIO.PWM(SERVO_PIN, 50)
 p.start(2.5)
 try:
     while True:
@@ -17,4 +17,4 @@ try:
         time.sleep(1)
 except KeyboardInterrupt:
     p.stop()
-    gpio.cleanup()
+    GPIO.cleanup()
