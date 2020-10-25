@@ -16,6 +16,7 @@ logger = logging.getLogger(__name__)
 coloredlogs.install(level="DEBUG")
 
 SERVO_PIN = 12
+GPIO.setmode(GPIO.BOARD)
 GPIO.setup(SERVO_PIN, GPIO.OUT)
 
 p = GPIO.PWM(SERVO_PIN, 50)
