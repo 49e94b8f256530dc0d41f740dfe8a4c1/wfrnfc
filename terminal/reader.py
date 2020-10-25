@@ -73,6 +73,7 @@ if __name__ == "__main__":
             if response.status_code == 200:
                 logger.info("Authentication successful, requesting TAN key")
                 lcd.message("Enter TAN key", 1)
+                lcd.message("# to confirm", 2)
                 tan_key = ""
                 while True:
                     key = keypad.getKey()
@@ -82,6 +83,7 @@ if __name__ == "__main__":
                         lcd.message(tan_key, 2)
                     if key == "#":
                         break
+                logging.info(f"TAN Key {tan_key}")
                 lcd.message("Authentication successful", 1)
                 lcd.message("successful", 2)
             else:
