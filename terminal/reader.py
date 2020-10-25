@@ -50,7 +50,6 @@ keys = [
 rowsPins = [12, 16, 20, 21]  # connect to the row pinouts of the keypad
 colsPins = [6, 13, 19, 26]  # connect to the column pinouts of the keypad
 
-
 load_dotenv(find_dotenv())
 
 if __name__ == "__main__":
