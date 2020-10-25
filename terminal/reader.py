@@ -19,8 +19,6 @@ SERVO_PIN = 18
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(SERVO_PIN, GPIO.OUT)
 
-p = GPIO.PWM(SERVO_PIN, 50)
-
 READER_TIMEOUT = 15
 DOOR_TIMEOUT = 5
 
@@ -67,8 +65,8 @@ if __name__ == "__main__":
     lcd = LCD(2, 0x27, True)
     keypad = Keypad.Keypad(keys, rowsPins, colsPins, ROWS, COLS)  # create Keypad object
     keypad.setDebounceTime(50)  # set the debounce time
-    p = GPIO.PWM(SERVO_PIN, 50)
-    p.start(2.5)
+    servo = GPIO.PWM(SERVO_PIN, 50)
+    servo.start(2.5)
     try:
         while True:
             logger.info("Hold a tag near the reader")
@@ -103,11 +101,11 @@ if __name__ == "__main__":
                     logging.debug("Door unlocked")
                     lcd.message("Welcome!", 1)
                     lcd.message("Door unlocked", 2)
-                    p.start(2.5)
-                    p.ChangeDutyCycle(7.5)
+                    servo.start(2.5)
+                    servo.ChangeDutyCycle(7.5)
                     time.sleep(DOOR_TIMEOUT)
-                    p.ChangeDutyCycle(2.5)
-                    p.stop()
+                    servo.ChangeDutyCycle(2.5)
+                    servo.stop()
                 else:
                     logging.error("TAN verification unsuccessful")
                     lcd.message("TAN verification", 1)
@@ -122,5 +120,5 @@ if __name__ == "__main__":
         lcd.clear()
         logger.debug("Cleanup GPIO")
         GPIO.cleanup()
-        p.stop()
+        servo.stop()
         raise
