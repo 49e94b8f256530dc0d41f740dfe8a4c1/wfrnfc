@@ -80,7 +80,7 @@ if __name__ == "__main__":
                 while True:
                     key = keypad.getKey()
                     if key != keypad.NULL:
-                        logging.info(f"Key {key} pressed")
+                        logging.debug(f"Key {key} pressed")
                         if key == "#":
                             break
                         tan_key += key
