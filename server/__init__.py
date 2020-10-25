@@ -114,10 +114,11 @@ def verify_tan():
         tag = Tag.get(Tag.content == content)
         totp = pyotp.TOTP(tag.tan_secret)
         logging.debug(f"Retrieved TAN Key {tag.tan_secret}")
+        logging.debug(f"Verifying TAN key {tan_key}")
         if totp.verify(tan_key):
             return 200
         else:
-            raise Exception
+            raise Exception()
     except:
         return {"error": "401"}, 401
 
