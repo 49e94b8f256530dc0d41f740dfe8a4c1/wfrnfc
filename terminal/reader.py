@@ -85,9 +85,9 @@ if __name__ == "__main__":
                             break
                         tan_key += key
                         lcd.message(tan_key, 2)
-                logging.info(f"TAN Key {tan_key}")
-                lcd.message("Authentication successful", 1)
-                lcd.message("successful", 2)
+                logging.info(f"Verifying TAN Key {tan_key}")
+                lcd.message("Welcome", 1)
+                lcd.message("Door unlocked", 2)
             else:
                 logger.error("Authentication unsuccessful")
                 lcd.message("Authentication", 1)
