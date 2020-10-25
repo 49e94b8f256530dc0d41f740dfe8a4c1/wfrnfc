@@ -113,6 +113,7 @@ def verify_tan():
     try:
         tag = Tag.get(Tag.content == content)
         totp = pyotp.TOTP(tag.tan_secret)
+        logging.debug(f"Retrieved {tag.tan_secret}")
         if totp.verify(tan_key):
             return 200
         else:

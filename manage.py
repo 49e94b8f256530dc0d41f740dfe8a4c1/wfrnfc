@@ -123,7 +123,7 @@ if __name__ == "__main__":
                     logging.info(f"Generated TAN secret {response.get('tan_secret')}")
                     tan_secret_uri = pyotp.totp.TOTP(
                         response.get("tan_secret")
-                    ).provisioning_uri(name="alice@google.com", issuer_name="WFRNFC")
+                    ).provisioning_uri(name="foo@domain.org", issuer_name="WFRNFC")
                     logging.info(
                         f"https://api.qrserver.com/v1/create-qr-code/?size=300x300&data={tan_secret_uri}"
                     )
