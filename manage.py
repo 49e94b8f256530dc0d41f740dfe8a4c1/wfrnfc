@@ -124,7 +124,9 @@ if __name__ == "__main__":
                     tan_secret_uri = pyotp.totp.TOTP(
                         response.get("tan_secret")
                     ).provisioning_uri(name="alice@google.com", issuer_name="WFRNFC")
-                    logging.info(tan_secret_uri)
+                    logging.info(
+                        f"https://api.qrserver.com/v1/create-qr-code/?size=300x300&data={tan_secret_uri}"
+                    )
                     write_tag(response.get("content"))
                 else:
                     logging.info(f"Command `{command}` not found")
