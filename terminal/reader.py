@@ -92,7 +92,7 @@ if __name__ == "__main__":
                 )
                 if response.status_code == 200:
                     logging.debug("Door unlocked")
-                    lcd.message("Welcome", 1)
+                    lcd.message("Welcome!", 1)
                     lcd.message("Door unlocked", 2)
                 else:
                     logging.error("TAN verification unsuccessful")
