@@ -26,6 +26,7 @@ DOOR_TIMEOUT = 3
 
 reader = SimpleMFRC522()
 
+# DHT11 Module Setup
 dht11 = dht11.DHT11(pin=24)
 
 # Keypad setup
@@ -75,9 +76,12 @@ if __name__ == "__main__":
             dht_result = dht11.read()
             logger.info("Hold a tag near the reader")
             lcd.message("WFRNFC Access Control", 1)
-            temperature = "%-3.1f C" % dht_result.temperature
-            humidity = "%-3.1f %%" % dht_result.humidity
-            lcd.message(f"{temperature} {humidity}", 2)
+            if dht_result.is_valid():
+                temperature = "%-3.1f C" % dht_result.temperature
+                humidity = "%-3.1f %%" % dht_result.humidity
+                lcd.message(f"{temperature} {humidity}", 2)
+            else:
+                lcd.message(f"DHT11 Module Error", 2)
             id, data = reader.read()
             logger.info("Tag read successfully")
             logger.debug(f"id `{id}` data `{data}`")
