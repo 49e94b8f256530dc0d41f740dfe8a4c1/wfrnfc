@@ -2,8 +2,10 @@ import logging
 import os
 import sys
 import time
+from re import template
 
 import coloredlogs
+import dht11
 import requests
 import RPi.GPIO as GPIO
 from dotenv import find_dotenv, load_dotenv
@@ -19,10 +21,13 @@ SERVO_PIN = 18
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(SERVO_PIN, GPIO.OUT)
 
-READER_TIMEOUT = 15
+READER_TIMEOUT = 7
 DOOR_TIMEOUT = 3
 
 reader = SimpleMFRC522()
+
+# DHT11 Module Setup
+dht11 = dht11.DHT11(pin=24)
 
 # Keypad setup
 ROWS = 4  # number of rows of the Keypad
@@ -68,9 +73,15 @@ if __name__ == "__main__":
     servo = GPIO.PWM(SERVO_PIN, 50)
     try:
         while True:
+            dht_result = dht11.read()
             logger.info("Hold a tag near the reader")
-            lcd.message("WFRNFC RFID", 1)
-            lcd.message("Access Control", 2)
+            lcd.message("WFRNFC DEMO", 1)
+            if dht_result.is_valid():
+                temperature = "%-3.1f C" % dht_result.temperature
+                humidity = "%-3.1f %%" % dht_result.humidity
+                lcd.message(f"{temperature} {humidity}", 2)
+            else:
+                lcd.message(f"DHT11 Module Error", 2)
             id, data = reader.read()
             logger.info("Tag read successfully")
             logger.debug(f"id `{id}` data `{data}`")
@@ -99,13 +110,15 @@ if __name__ == "__main__":
                 if response.status_code == 200:
                     logging.debug("Door unlocked")
                     lcd.message("Welcome!", 1)
-                    lcd.message("Door unlocked", 2)
+                    lcd.message("Unlocking door", 2)
                     servo.start(2.5)
                     time.sleep(1)
                     servo.ChangeDutyCycle(7.5)
                     time.sleep(1)
                     servo.ChangeDutyCycle(12.5)
-                    time.sleep(1)
+                    time.sleep(DOOR_TIMEOUT)
+                    logging.debug("Locking door")
+                    lcd.message("Locking door", 2)
                     servo.ChangeDutyCycle(2.5)
                 else:
                     logging.error("TAN verification unsuccessful")
