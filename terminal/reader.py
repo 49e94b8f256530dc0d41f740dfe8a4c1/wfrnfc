@@ -75,8 +75,8 @@ if __name__ == "__main__":
             dht_result = dht11.read()
             logger.info("Hold a tag near the reader")
             lcd.message("WFRNFC Access Control", 1)
-            temperature = "Temp: %-3.1f C" % dht_result.temperature
-            humidity = "Hum: %-3.1f %%" % dht_result.humidity
+            temperature = "%-3.1f C" % dht_result.temperature
+            humidity = "%-3.1f %%" % dht_result.humidity
             lcd.message(f"{temperature} {humidity}", 2)
             id, data = reader.read()
             logger.info("Tag read successfully")
