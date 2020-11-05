@@ -21,7 +21,7 @@ SERVO_PIN = 18
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(SERVO_PIN, GPIO.OUT)
 
-READER_TIMEOUT = 15
+READER_TIMEOUT = 7
 DOOR_TIMEOUT = 3
 
 reader = SimpleMFRC522()
@@ -116,7 +116,7 @@ if __name__ == "__main__":
                     servo.ChangeDutyCycle(7.5)
                     time.sleep(1)
                     servo.ChangeDutyCycle(12.5)
-                    time.sleep(3)
+                    time.sleep(DOOR_TIMEOUT)
                     logging.debug("Locking door")
                     servo.ChangeDutyCycle(2.5)
                 else:
