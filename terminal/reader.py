@@ -75,9 +75,9 @@ if __name__ == "__main__":
         while True:
             dht_result = dht11.read()
             logger.info("Hold a tag near the reader")
-            lcd.message("WFRNFC Access Control", 1)
+            lcd.message("WFRNFC DEMO", 1)
             if dht_result.is_valid():
-                temperature = "%-3.1f C" % dht_result.temperature
+                temperature = "%-3.1f °C" % dht_result.temperature
                 humidity = "%-3.1f %%" % dht_result.humidity
                 lcd.message(f"{temperature} {humidity}", 2)
             else:
@@ -110,13 +110,14 @@ if __name__ == "__main__":
                 if response.status_code == 200:
                     logging.debug("Door unlocked")
                     lcd.message("Welcome!", 1)
-                    lcd.message("Door unlocked", 2)
+                    lcd.message("Unlocking door", 2)
                     servo.start(2.5)
                     time.sleep(1)
                     servo.ChangeDutyCycle(7.5)
                     time.sleep(1)
                     servo.ChangeDutyCycle(12.5)
-                    time.sleep(1)
+                    time.sleep(3)
+                    logging.debug("Locking door")
                     servo.ChangeDutyCycle(2.5)
                 else:
                     logging.error("TAN verification unsuccessful")

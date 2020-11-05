@@ -10,8 +10,8 @@ pytest-flask = "*"
 importlib-metadata = "1.7.0"
 
 [packages]
-# spidev = "*"
-# mfrc522 = "*"
+spidev = "*"
+mfrc522 = "*"
 flask = "*"
 peewee = "*"
 python-dotenv = "*"
