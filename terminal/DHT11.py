@@ -9,7 +9,6 @@ GPIO.cleanup()
 # read data using pin 14
 instance = dht11.DHT11(pin=24)
 result = instance.read()
-print(result)
 
 if result.is_valid():
     print("Temperature: %-3.1f C" % result.temperature)

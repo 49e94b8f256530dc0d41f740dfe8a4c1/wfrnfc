@@ -2,8 +2,10 @@ import logging
 import os
 import sys
 import time
+from re import template
 
 import coloredlogs
+import dht11
 import requests
 import RPi.GPIO as GPIO
 from dotenv import find_dotenv, load_dotenv
@@ -23,6 +25,8 @@ READER_TIMEOUT = 15
 DOOR_TIMEOUT = 3
 
 reader = SimpleMFRC522()
+
+dht11 = dht11.DHT11(pin=24)
 
 # Keypad setup
 ROWS = 4  # number of rows of the Keypad
@@ -68,9 +72,12 @@ if __name__ == "__main__":
     servo = GPIO.PWM(SERVO_PIN, 50)
     try:
         while True:
+            dht_result = dht11.read()
             logger.info("Hold a tag near the reader")
-            lcd.message("WFRNFC RFID", 1)
-            lcd.message("Access Control", 2)
+            lcd.message("WFRNFC Access Control", 1)
+            temperature = "Temp: %-3.1f C" % dht_result.temperature
+            humidity = "Hum: %-3.1f %%" % dht_result.humidity
+            lcd.message(f"{temperature} {humidity}", 2)
             id, data = reader.read()
             logger.info("Tag read successfully")
             logger.debug(f"id `{id}` data `{data}`")
