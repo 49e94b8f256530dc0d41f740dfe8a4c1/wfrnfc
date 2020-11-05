@@ -77,7 +77,7 @@ if __name__ == "__main__":
             logger.info("Hold a tag near the reader")
             lcd.message("WFRNFC DEMO", 1)
             if dht_result.is_valid():
-                temperature = "%-3.1f °C" % dht_result.temperature
+                temperature = "%-3.1f C" % dht_result.temperature
                 humidity = "%-3.1f %%" % dht_result.humidity
                 lcd.message(f"{temperature} {humidity}", 2)
             else:
