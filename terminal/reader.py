@@ -118,6 +118,7 @@ if __name__ == "__main__":
                     servo.ChangeDutyCycle(12.5)
                     time.sleep(DOOR_TIMEOUT)
                     logging.debug("Locking door")
+                    lcd.message("Locking door", 2)
                     servo.ChangeDutyCycle(2.5)
                 else:
                     logging.error("TAN verification unsuccessful")
