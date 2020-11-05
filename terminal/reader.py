@@ -1,7 +1,7 @@
 import logging
 import os
 import sys
-from time import sleep
+import time
 
 import coloredlogs
 import requests
@@ -15,10 +15,16 @@ from LCD import LCD
 logger = logging.getLogger(__name__)
 coloredlogs.install(level="DEBUG")
 
+SERVO_PIN = 18
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(SERVO_PIN, GPIO.OUT)
+
 READER_TIMEOUT = 15
+DOOR_TIMEOUT = 3
 
 reader = SimpleMFRC522()
 
+# Keypad setup
 ROWS = 4  # number of rows of the Keypad
 COLS = 4  # number of columns of the Keypad
 keys = [
@@ -39,9 +45,8 @@ keys = [
     "#",
     "D",
 ]
-rowsPins = [32, 36, 38, 40]  # connect to the row pinouts of the keypad
-colsPins = [31, 33, 35, 37]  # connect to the column pinouts of the keypad
-
+rowsPins = [12, 16, 20, 21]  # connect to the row pinouts of the keypad
+colsPins = [6, 13, 19, 26]  # connect to the column pinouts of the keypad
 
 load_dotenv(find_dotenv())
 
@@ -60,6 +65,7 @@ if __name__ == "__main__":
     lcd = LCD(2, 0x27, True)
     keypad = Keypad.Keypad(keys, rowsPins, colsPins, ROWS, COLS)  # create Keypad object
     keypad.setDebounceTime(50)  # set the debounce time
+    servo = GPIO.PWM(SERVO_PIN, 50)
     try:
         while True:
             logger.info("Hold a tag near the reader")
@@ -94,6 +100,13 @@ if __name__ == "__main__":
                     logging.debug("Door unlocked")
                     lcd.message("Welcome!", 1)
                     lcd.message("Door unlocked", 2)
+                    servo.start(2.5)
+                    time.sleep(1)
+                    servo.ChangeDutyCycle(7.5)
+                    time.sleep(1)
+                    servo.ChangeDutyCycle(12.5)
+                    time.sleep(1)
+                    servo.ChangeDutyCycle(2.5)
                 else:
                     logging.error("TAN verification unsuccessful")
                     lcd.message("TAN verification", 1)
@@ -102,10 +115,11 @@ if __name__ == "__main__":
                 logger.error("Authentication unsuccessful")
                 lcd.message("Authentication", 1)
                 lcd.message("unsuccessful", 2)
-            sleep(READER_TIMEOUT)
+            time.sleep(READER_TIMEOUT)
     except KeyboardInterrupt:
         logger.debug("Clear LCD")
         lcd.clear()
         logger.debug("Cleanup GPIO")
         GPIO.cleanup()
+        servo.stop()
         raise
