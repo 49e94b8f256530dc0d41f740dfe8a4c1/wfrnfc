@@ -23,6 +23,7 @@ coloredlogs = "*"
 tabulate = "*"
 smbus = "*"
 pyotp = "*"
+dht11 = "*"
 
 [requires]
 python_version = "3"
