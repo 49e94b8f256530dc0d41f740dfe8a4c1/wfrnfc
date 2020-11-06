@@ -1,5 +1,8 @@
 # WFRNFC Multi-Factor RFID Access Control Demo
 
+![GitHub Pipenv locked Python version](https://img.shields.io/github/pipenv/locked/python-version/49e94b8f256530dc0d41f740dfe8a4c1/wfrnfc)
+![GPLv3](https://img.shields.io/github/license/49e94b8f256530dc0d41f740dfe8a4c1/wfrnfc)
+
 ## Table of Contents
 
 1. [Introduction](#introduction)
@@ -16,7 +19,7 @@
 
 Radio Frequency Identification (RFID) systems consist of three components: _tags_ also known as labels or transponders [2], _readers_ also known as interrogators [2] and a back-end server [1]. RFID systems are used to track tags attached to objects through space and time and have thus found applications in a wide range of fields [3].
 
-## Setup
+## Configuration
 
 ### Raspberry Pi 4B
 
@@ -107,6 +110,13 @@ Simulates a mechanical door.
 
 ## Dependencies
 
-1. LCD Library - https://github.com/sterlingbeason/LCD-1602-I2C
+1. LCD - https://github.com/sterlingbeason/LCD-1602-I2C
 
-2. Matrix Keypad Library - https://github.com/Freenove/Freenove_Ultimate_Starter_Kit_for_Raspberry_Pi/blob/master/Code/Python_Code/22.1.1_MatrixKeypad/Keypad.py
+2. 8x8 Keypad - https://github.com/Freenove/Freenove_Ultimate_Starter_Kit_for_Raspberry_Pi/blob/master/Code/Python_Code/22.1.1_MatrixKeypad/Keypad.py
+
+3. DHT11 - https://pypi.org/project/dht11/
+
+## Testing
+
+    pipenv install --dev
+    pytest
