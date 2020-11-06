@@ -15,11 +15,11 @@ import Keypad
 from LCD import LCD
 
 env_path = Path("..") / ".env"
-load_dotenv(dotenv_path=env_path)
+load_dotenv(dotenv_path=env_path, verbose=True)
 
 logger = logging.getLogger(__name__)
 coloredlogs.install(level="DEBUG")
-
+# Load env variables
 LED_PIN = int(os.getenv("LED_PIN"))
 SERVO_PIN = int(os.getenv("SERVO_PIN"))
 DHT11_PIN = int(os.getenv("DHT11_PIN"))
