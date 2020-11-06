@@ -3,6 +3,10 @@
 ![GitHub Pipenv locked Python version](https://img.shields.io/github/pipenv/locked/python-version/49e94b8f256530dc0d41f740dfe8a4c1/wfrnfc)
 ![GPLv3](https://img.shields.io/github/license/49e94b8f256530dc0d41f740dfe8a4c1/wfrnfc)
 
+<p align="center">
+    <img src="docs/imgs/photo.jpg" width="600">
+</p>
+
 ## Table of Contents
 
 1. [Introduction](#introduction)
@@ -13,10 +17,11 @@
    4. [LED](#led)
    5. [8x8 Matrix Keypad](#8x8-matrix-keypad)
    6. [SG90 Servo](#sg90-servo)
-3. [Limitations](#limitations)
-4. [Dependencies](#dependencies)
-5. [Testing](#testing)
-6. [References](#references)
+3. [System Overview](system-overview)
+4. [Limitations](#limitations)
+5. [Dependencies](#dependencies)
+6. [Testing](#testing)
+7. [References](#references)
 
 ## Introduction
 
@@ -95,6 +100,12 @@ Used to input TAN keys.
 Simulates a mechanical door.
 
     SERVO_PIN=18
+
+## System Overview
+
+<p align="center">
+    <img src="docs/imgs/system-overview.png" />
+</p>
 
 ## Limitations
 
