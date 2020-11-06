@@ -28,7 +28,6 @@ KEYPAD_ROW_PINS = os.getenv("KEYPAD_ROW_PINS").split(",")
 
 KEYPAD_COL_PINS = list(map(lambda element: int(element), KEYPAD_COL_PINS))
 KEYPAD_ROW_PINS = list(map(lambda element: int(element), KEYPAD_ROW_PINS))
-print(KEYPAD_COL_PINS, KEYPAD_ROW_PINS)
 # Use BCM Mode
 GPIO.setmode(GPIO.BCM)
 # Setup pins
