@@ -23,8 +23,8 @@ coloredlogs.install(level="DEBUG")
 LED_PIN = int(os.getenv("LED_PIN"))
 SERVO_PIN = int(os.getenv("SERVO_PIN"))
 DHT11_PIN = int(os.getenv("DHT11_PIN"))
-KEYPAD_COL_PINS = os.getenv("KEYPAD_COL_PINS")
-KEYPAD_ROW_PINS = os.getenv("KEYPAD_ROW_PINS")
+KEYPAD_COL_PINS = os.getenv("KEYPAD_COL_PINS").split(",")
+KEYPAD_ROW_PINS = os.getenv("KEYPAD_ROW_PINS").split(",")
 # Use BCM Mode
 GPIO.setmode(GPIO.BCM)
 # Setup pins
