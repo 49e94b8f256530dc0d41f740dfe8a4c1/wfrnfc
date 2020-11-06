@@ -14,6 +14,9 @@
    5. [8x8 Matrix Keypad](#8x8-matrix-keypad)
    6. [SG90 Servo](#sg90-servo)
 3. [Limitations](#limitations)
+4. [Dependencies](#dependencies)
+5. [Testing](#testing)
+6. [References](#references)
 
 ## Introduction
 
@@ -100,14 +103,6 @@ Simulates a mechanical door.
 
 3. Energy could be saved by using an ultrasound sensor at the reader terminal through activating the `RC522` module by sending a signal to the currently unused `IRQ` connection only when an actor approaches and putting the RFID module into sleep mode otherwise.
 
-## References
-
-1. Chen, Y.Y. and Tsai, M.L., "The Study on Secure RFID Authentication and Access Control", Current Trends and Challenges in RFID, p.393, 2011.
-
-2. EPCglobal, G.S., "EPC Radio-Frequency Identity Protocols Generation-2 UHF RFID; Specification for RFID Air Interface Protocol for Communications at 860 MHz –960 MHz", EPCglobal Inc., November 2013.
-
-3. Sethi G, Dharani A., "Challenges of Radio Frequency Identification Technique.", International Journal of Science and Research (IJSR), https://www.ijsr.net/search_index_results_paperid.php?id=OCT14721, Volume 3, Issue 11, pp. 51 - 55, November 2014.
-
 ## Dependencies
 
 1. LCD - https://github.com/sterlingbeason/LCD-1602-I2C
@@ -120,3 +115,11 @@ Simulates a mechanical door.
 
     pipenv install --dev
     pytest
+
+## References
+
+1. Chen, Y.Y. and Tsai, M.L., "The Study on Secure RFID Authentication and Access Control", Current Trends and Challenges in RFID, p.393, 2011.
+
+2. EPCglobal, G.S., "EPC Radio-Frequency Identity Protocols Generation-2 UHF RFID; Specification for RFID Air Interface Protocol for Communications at 860 MHz –960 MHz", EPCglobal Inc., November 2013.
+
+3. Sethi G, Dharani A., "Challenges of Radio Frequency Identification Technique.", International Journal of Science and Research (IJSR), https://www.ijsr.net/search_index_results_paperid.php?id=OCT14721, Volume 3, Issue 11, pp. 51 - 55, November 2014.
