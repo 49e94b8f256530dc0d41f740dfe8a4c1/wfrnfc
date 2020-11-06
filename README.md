@@ -17,7 +17,7 @@
    4. [LED](#led)
    5. [8x8 Matrix Keypad](#8x8-matrix-keypad)
    6. [SG90 Servo](#sg90-servo)
-3. [System Overview](system-overview)
+3. [System Overview](#system-overview)
 4. [Limitations](#limitations)
 5. [Dependencies](#dependencies)
 6. [Testing](#testing)
