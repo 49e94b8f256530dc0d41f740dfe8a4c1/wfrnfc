@@ -14,16 +14,24 @@ from mfrc522 import SimpleMFRC522
 import Keypad
 from LCD import LCD
 
+load_dotenv()
+
 logger = logging.getLogger(__name__)
 coloredlogs.install(level="DEBUG")
 
+LED_PIN = int(os.getenv("LED_PIN"))
+assert LED_PIN is not None
 SERVO_PIN = 18
+# Use BCM Mode
 GPIO.setmode(GPIO.BCM)
+# Setup pins
 GPIO.setup(SERVO_PIN, GPIO.OUT)
+GPIO.setup(LED_PIN, GPIO.OUT)
 
-READER_TIMEOUT = 7
-DOOR_TIMEOUT = 3
+READER_TIMEOUT = int(os.getenv("READER_TIMEOUT", 7))
+DOOR_TIMEOUT = int(os.getenv("DOOR_TIMEOUT", 3))
 
+# Load reader
 reader = SimpleMFRC522()
 
 # DHT11 Module Setup
@@ -111,12 +119,18 @@ if __name__ == "__main__":
                     logging.debug("Door unlocked")
                     lcd.message("Welcome!", 1)
                     lcd.message("Unlocking door", 2)
+                    # Status LED ON
+                    logger.debug("Turning status LED ON")
+                    GPIO.output(LED_PIN, GPIO.HIGH)
                     servo.start(2.5)
                     time.sleep(1)
                     servo.ChangeDutyCycle(7.5)
                     time.sleep(1)
                     servo.ChangeDutyCycle(12.5)
                     time.sleep(DOOR_TIMEOUT)
+                    # Status LED OFF
+                    GPIO.output(LED_PIN, GPIO.LOW)
+                    logger.debug("Turning status LED OFF")
                     logging.debug("Locking door")
                     lcd.message("Locking door", 2)
                     servo.ChangeDutyCycle(2.5)
