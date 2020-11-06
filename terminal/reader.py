@@ -26,8 +26,8 @@ DHT11_PIN = int(os.getenv("DHT11_PIN"))
 KEYPAD_COL_PINS = os.getenv("KEYPAD_COL_PINS").split(",")
 KEYPAD_ROW_PINS = os.getenv("KEYPAD_ROW_PINS").split(",")
 
-KEYPAD_COL_PINS = list(KEYPAD_COL_PINS.map(lambda element: int(element)))
-KEYPAD_ROW_PINS = list(KEYPAD_ROW_PINS.map(lambda element: int(element)))
+KEYPAD_COL_PINS = list(map(lambda element: int(element), KEYPAD_COL_PINS))
+KEYPAD_ROW_PINS = list(map(lambda element: int(element), KEYPAD_ROW_PINS))
 print(KEYPAD_COL_PINS, KEYPAD_ROW_PINS)
 # Use BCM Mode
 GPIO.setmode(GPIO.BCM)
