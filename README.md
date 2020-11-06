@@ -87,7 +87,8 @@ Used to signify the door is unlocked.
 
 Used to input TAN keys.
 
-    DHT11_PIN=11
+    KEYPAD_COL_PINS=6,13,19,26
+    KEYPAD_ROW_PINS=12,16,20,21
 
 ### SG90 Servo
 
