@@ -21,7 +21,10 @@ coloredlogs.install(level="DEBUG")
 
 LED_PIN = int(os.getenv("LED_PIN"))
 assert LED_PIN is not None
-SERVO_PIN = 18
+SERVO_PIN = int(os.getenv("SERVO_PIN"))
+assert SERVO_PIN is not None
+DHT11_PIN = int(os.getenv("DHT11_PIN"))
+assert DHT11_PIN is not None
 # Use BCM Mode
 GPIO.setmode(GPIO.BCM)
 # Setup pins
@@ -35,7 +38,7 @@ DOOR_TIMEOUT = int(os.getenv("DOOR_TIMEOUT", 3))
 reader = SimpleMFRC522()
 
 # DHT11 Module Setup
-dht11 = dht11.DHT11(pin=24)
+dht11 = dht11.DHT11(pin=DHT11_PIN)
 
 # Keypad setup
 ROWS = 4  # number of rows of the Keypad
@@ -81,12 +84,12 @@ if __name__ == "__main__":
     servo = GPIO.PWM(SERVO_PIN, 50)
     try:
         while True:
-            dht_result = dht11.read()
+            dht11_result = dht11.read()
             logger.info("Hold a tag near the reader")
             lcd.message("WFRNFC DEMO", 1)
-            if dht_result.is_valid():
-                temperature = "%-3.1f C" % dht_result.temperature
-                humidity = "%-3.1f %%" % dht_result.humidity
+            if dht11_result.is_valid():
+                temperature = "%-3.1f C" % dht11_result.temperature
+                humidity = "%-3.1f %%" % dht11_result.humidity
                 lcd.message(f"{temperature} {humidity}", 2)
             else:
                 lcd.message(f"DHT11 Module Error", 2)
