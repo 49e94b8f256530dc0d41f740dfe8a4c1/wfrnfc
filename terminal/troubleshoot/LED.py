@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-LED_PIN = os.getenv("LED_PIN")
+LED_PIN = int(os.getenv("LED_PIN"))
 assert LED_PIN is not None
 
 GPIO.setmode(GPIO.BCM)
