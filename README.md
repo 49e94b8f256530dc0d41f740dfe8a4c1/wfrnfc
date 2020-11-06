@@ -3,6 +3,10 @@
 ![GitHub Pipenv locked Python version](https://img.shields.io/github/pipenv/locked/python-version/49e94b8f256530dc0d41f740dfe8a4c1/wfrnfc)
 ![GPLv3](https://img.shields.io/github/license/49e94b8f256530dc0d41f740dfe8a4c1/wfrnfc)
 
+<p align="center">
+    <img src="docs/imgs/photo.jpg" width="600">
+</p>
+
 ## Table of Contents
 
 1. [Introduction](#introduction)
@@ -13,10 +17,11 @@
    4. [LED](#led)
    5. [8x8 Matrix Keypad](#8x8-matrix-keypad)
    6. [SG90 Servo](#sg90-servo)
-3. [Limitations](#limitations)
-4. [Dependencies](#dependencies)
-5. [Testing](#testing)
-6. [References](#references)
+3. [System Overview](system-overview)
+4. [Limitations](#limitations)
+5. [Dependencies](#dependencies)
+6. [Testing](#testing)
+7. [References](#references)
 
 ## Introduction
 
@@ -96,9 +101,15 @@ Simulates a mechanical door.
 
     SERVO_PIN=18
 
+## System Overview
+
+<p align="center">
+    <img src="docs/imgs/system-overview.png" />
+</p>
+
 ## Limitations
 
-1. Relies on 13MHz MiFare cards which are inherently secure.
+1. Relies on 13MHz MiFare cards which are inherently secure [4].
 
 2. Centralised server is a single point of failure. A server going down means the whole system goes down. A decentralised system where terminals can also act as servers might come into question, however this approach raises a lot of security questions.
 
@@ -124,3 +135,5 @@ Simulates a mechanical door.
 2. EPCglobal, G.S., "EPC Radio-Frequency Identity Protocols Generation-2 UHF RFID; Specification for RFID Air Interface Protocol for Communications at 860 MHz –960 MHz", EPCglobal Inc., November 2013.
 
 3. Sethi G, Dharani A., "Challenges of Radio Frequency Identification Technique.", International Journal of Science and Research (IJSR), https://www.ijsr.net/search_index_results_paperid.php?id=OCT14721, Volume 3, Issue 11, pp. 51 - 55, November 2014.
+
+4. F. D. Garcia, P. van Rossum, R. Verdult and R. W. Schreur, "Wirelessly Pickpocketing a Mifare Classic Card," 2009 30th IEEE Symposium on Security and Privacy, Berkeley, CA, 2009, pp. 3-15, doi: 10.1109/SP.2009.6.
