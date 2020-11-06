@@ -62,7 +62,6 @@ keys = [
     "D",
 ]
 
-load_dotenv(find_dotenv())
 
 if __name__ == "__main__":
     base_url = f"http://{os.getenv('SERVER_HOST')}:{os.getenv('SERVER_PORT')}"
