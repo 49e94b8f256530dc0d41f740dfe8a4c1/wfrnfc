@@ -98,7 +98,7 @@ Simulates a mechanical door.
 
 ## Limitations
 
-1. Relies on 13MHz MiFare cards which are inherently secure.
+1. Relies on 13MHz MiFare cards which are inherently secure [4].
 
 2. Centralised server is a single point of failure. A server going down means the whole system goes down. A decentralised system where terminals can also act as servers might come into question, however this approach raises a lot of security questions.
 
@@ -124,3 +124,5 @@ Simulates a mechanical door.
 2. EPCglobal, G.S., "EPC Radio-Frequency Identity Protocols Generation-2 UHF RFID; Specification for RFID Air Interface Protocol for Communications at 860 MHz –960 MHz", EPCglobal Inc., November 2013.
 
 3. Sethi G, Dharani A., "Challenges of Radio Frequency Identification Technique.", International Journal of Science and Research (IJSR), https://www.ijsr.net/search_index_results_paperid.php?id=OCT14721, Volume 3, Issue 11, pp. 51 - 55, November 2014.
+
+4. F. D. Garcia, P. van Rossum, R. Verdult and R. W. Schreur, "Wirelessly Pickpocketing a Mifare Classic Card," 2009 30th IEEE Symposium on Security and Privacy, Berkeley, CA, 2009, pp. 3-15, doi: 10.1109/SP.2009.6.
