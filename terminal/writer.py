@@ -4,7 +4,7 @@ import logging
 import RPi.GPIO as GPIO
 from mfrc522 import SimpleMFRC522
 
-from LCD import LCD
+from terminal.LCD import LCD
 
 logger = logging.getLogger(__name__)
 
