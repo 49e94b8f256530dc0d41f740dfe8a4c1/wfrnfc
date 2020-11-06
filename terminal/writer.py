@@ -10,7 +10,7 @@ reader = SimpleMFRC522()
 
 def write_tag(data):
     try:
-        logger.info(f"Hold a tag near the reader to write `{data}`")
+        logger.info(f"Hold a tag near the terminal to write `{data}`")
         reader.write(data)
         logger.info("Write successful")
     finally:

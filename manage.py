@@ -103,21 +103,21 @@ if __name__ == "__main__":
                 command = sys.stdin.readline().rstrip()
                 if command == "q":
                     sys.exit(0)
-                elif command == "list terminals":
+                elif command == "listterminals":
                     _, response = request_manager.make_request(
                         "/api/v1/terminals", "GET"
                     )
                     logging.info("Listing terminals")
                     # TODO: Show message if terminals empty
                     print(tabulate(response, headers="keys"))
-                elif command == "create terminal":
+                elif command == "createterminal":
                     _, response = request_manager.make_request(
                         "/api/v1/terminals", "POST"
                     )
                     logging.info(
                         f"Created terminal {response.get('registration_token')}"
                     )
-                elif command == "write tag":
+                elif command == "writetag":
                     _, response = request_manager.make_request("/api/v1/tags", "POST")
                     logging.info(f"Created tag {response.get('content')}")
                     logging.info(f"Generated TAN secret {response.get('tan_secret')}")
