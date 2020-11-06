@@ -14,7 +14,7 @@ from mfrc522 import SimpleMFRC522
 import Keypad
 from LCD import LCD
 
-env_path = Path("..") / ".env"
+env_path = Path(".") / ("..") / ".env"
 load_dotenv(dotenv_path=env_path, verbose=True)
 
 logger = logging.getLogger(__name__)
