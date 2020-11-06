@@ -25,6 +25,7 @@ SERVO_PIN = int(os.getenv("SERVO_PIN"))
 DHT11_PIN = int(os.getenv("DHT11_PIN"))
 KEYPAD_COL_PINS = os.getenv("KEYPAD_COL_PINS").split(",")
 KEYPAD_ROW_PINS = os.getenv("KEYPAD_ROW_PINS").split(",")
+print(KEYPAD_COL_PINS, KEYPAD_ROW_PINS)
 # Use BCM Mode
 GPIO.setmode(GPIO.BCM)
 # Setup pins
