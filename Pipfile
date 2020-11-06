@@ -7,11 +7,11 @@ verify_ssl = true
 pytest = "*"
 pytest-cov = "*"
 pytest-flask = "*"
-importlib-metadata = "*"
+importlib-metadata = "1.7.0"
 
 [packages]
-# spidev = "*"
-# mfrc522 = "*"
+spidev = "*"
+mfrc522 = "*"
 flask = "*"
 peewee = "*"
 python-dotenv = "*"
@@ -22,6 +22,8 @@ requests = "*"
 coloredlogs = "*"
 tabulate = "*"
 smbus = "*"
+pyotp = "*"
+dht11 = "*"
 
 [requires]
 python_version = "3"
