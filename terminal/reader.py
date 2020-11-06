@@ -2,19 +2,20 @@ import logging
 import os
 import sys
 import time
-from re import template
+from pathlib import Path
 
 import coloredlogs
 import dht11
 import requests
 import RPi.GPIO as GPIO
-from dotenv import find_dotenv, load_dotenv
+from dotenv import load_dotenv
 from mfrc522 import SimpleMFRC522
 
 import Keypad
 from LCD import LCD
 
-load_dotenv(find_dotenv())
+env_path = Path("..") / ".env"
+load_dotenv(dotenv_path=env_path)
 
 logger = logging.getLogger(__name__)
 coloredlogs.install(level="DEBUG")
