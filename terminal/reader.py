@@ -14,17 +14,14 @@ from mfrc522 import SimpleMFRC522
 import Keypad
 from LCD import LCD
 
-load_dotenv()
+load_dotenv(find_dotenv())
 
 logger = logging.getLogger(__name__)
 coloredlogs.install(level="DEBUG")
 
 LED_PIN = int(os.getenv("LED_PIN"))
-assert LED_PIN is not None
 SERVO_PIN = int(os.getenv("SERVO_PIN"))
-assert SERVO_PIN is not None
 DHT11_PIN = int(os.getenv("DHT11_PIN"))
-assert DHT11_PIN is not None
 KEYPAD_COL_PINS = os.getenv("KEYPAD_COL_PINS")
 KEYPAD_ROW_PINS = os.getenv("KEYPAD_ROW_PINS")
 # Use BCM Mode
