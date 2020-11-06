@@ -2,29 +2,32 @@ import logging
 import os
 import sys
 import time
-from re import template
+from pathlib import Path
 
 import coloredlogs
 import dht11
 import requests
 import RPi.GPIO as GPIO
-from dotenv import find_dotenv, load_dotenv
+from dotenv import load_dotenv
 from mfrc522 import SimpleMFRC522
 
 import Keypad
 from LCD import LCD
 
-load_dotenv()
+env_path = Path(".") / ("..") / ".env"
+load_dotenv(dotenv_path=env_path, verbose=True)
 
 logger = logging.getLogger(__name__)
 coloredlogs.install(level="DEBUG")
-
+# Load env variables
 LED_PIN = int(os.getenv("LED_PIN"))
-assert LED_PIN is not None
 SERVO_PIN = int(os.getenv("SERVO_PIN"))
-assert SERVO_PIN is not None
 DHT11_PIN = int(os.getenv("DHT11_PIN"))
-assert DHT11_PIN is not None
+KEYPAD_COL_PINS = os.getenv("KEYPAD_COL_PINS").split(",")
+KEYPAD_ROW_PINS = os.getenv("KEYPAD_ROW_PINS").split(",")
+
+KEYPAD_COL_PINS = list(map(lambda element: int(element), KEYPAD_COL_PINS))
+KEYPAD_ROW_PINS = list(map(lambda element: int(element), KEYPAD_ROW_PINS))
 # Use BCM Mode
 GPIO.setmode(GPIO.BCM)
 # Setup pins
@@ -61,10 +64,7 @@ keys = [
     "#",
     "D",
 ]
-rowsPins = [12, 16, 20, 21]  # connect to the row pinouts of the keypad
-colsPins = [6, 13, 19, 26]  # connect to the column pinouts of the keypad
 
-load_dotenv(find_dotenv())
 
 if __name__ == "__main__":
     base_url = f"http://{os.getenv('SERVER_HOST')}:{os.getenv('SERVER_PORT')}"
@@ -79,7 +79,9 @@ if __name__ == "__main__":
         sys.exit(0)
     logging.debug(f"Started terminal with registration token `{registration_token}`")
     lcd = LCD(2, 0x27, True)
-    keypad = Keypad.Keypad(keys, rowsPins, colsPins, ROWS, COLS)  # create Keypad object
+    keypad = Keypad.Keypad(
+        keys, KEYPAD_ROW_PINS, KEYPAD_COL_PINS, ROWS, COLS
+    )  # create Keypad object
     keypad.setDebounceTime(50)  # set the debounce time
     servo = GPIO.PWM(SERVO_PIN, 50)
     try:

@@ -1,5 +1,8 @@
 # WFRNFC Multi-Factor RFID Access Control Demo
 
+![GitHub Pipenv locked Python version](https://img.shields.io/github/pipenv/locked/python-version/49e94b8f256530dc0d41f740dfe8a4c1/wfrnfc)
+![GPLv3](https://img.shields.io/github/license/49e94b8f256530dc0d41f740dfe8a4c1/wfrnfc)
+
 ## Table of Contents
 
 1. [Introduction](#introduction)
@@ -11,12 +14,15 @@
    5. [8x8 Matrix Keypad](#8x8-matrix-keypad)
    6. [SG90 Servo](#sg90-servo)
 3. [Limitations](#limitations)
+4. [Dependencies](#dependencies)
+5. [Testing](#testing)
+6. [References](#references)
 
 ## Introduction
 
 Radio Frequency Identification (RFID) systems consist of three components: _tags_ also known as labels or transponders [2], _readers_ also known as interrogators [2] and a back-end server [1]. RFID systems are used to track tags attached to objects through space and time and have thus found applications in a wide range of fields [3].
 
-## Setup
+## Configuration
 
 ### Raspberry Pi 4B
 
@@ -81,7 +87,8 @@ Used to signify the door is unlocked.
 
 Used to input TAN keys.
 
-    DHT11_PIN=11
+    KEYPAD_COL_PINS=6,13,19,26
+    KEYPAD_ROW_PINS=12,16,20,21
 
 ### SG90 Servo
 
@@ -97,6 +104,19 @@ Simulates a mechanical door.
 
 3. Energy could be saved by using an ultrasound sensor at the reader terminal through activating the `RC522` module by sending a signal to the currently unused `IRQ` connection only when an actor approaches and putting the RFID module into sleep mode otherwise.
 
+## Dependencies
+
+1. LCD - https://github.com/sterlingbeason/LCD-1602-I2C
+
+2. 8x8 Keypad - https://github.com/Freenove/Freenove_Ultimate_Starter_Kit_for_Raspberry_Pi/blob/master/Code/Python_Code/22.1.1_MatrixKeypad/Keypad.py
+
+3. DHT11 - https://pypi.org/project/dht11/
+
+## Testing
+
+    pipenv install --dev
+    pytest
+
 ## References
 
 1. Chen, Y.Y. and Tsai, M.L., "The Study on Secure RFID Authentication and Access Control", Current Trends and Challenges in RFID, p.393, 2011.
@@ -104,9 +124,3 @@ Simulates a mechanical door.
 2. EPCglobal, G.S., "EPC Radio-Frequency Identity Protocols Generation-2 UHF RFID; Specification for RFID Air Interface Protocol for Communications at 860 MHz –960 MHz", EPCglobal Inc., November 2013.
 
 3. Sethi G, Dharani A., "Challenges of Radio Frequency Identification Technique.", International Journal of Science and Research (IJSR), https://www.ijsr.net/search_index_results_paperid.php?id=OCT14721, Volume 3, Issue 11, pp. 51 - 55, November 2014.
-
-## Dependencies
-
-1. LCD Library - https://github.com/sterlingbeason/LCD-1602-I2C
-
-2. Matrix Keypad Library - https://github.com/Freenove/Freenove_Ultimate_Starter_Kit_for_Raspberry_Pi/blob/master/Code/Python_Code/22.1.1_MatrixKeypad/Keypad.py
